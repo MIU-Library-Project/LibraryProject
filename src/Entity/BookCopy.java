@@ -11,7 +11,11 @@ public class BookCopy {
 		this.copyNumber = copyNumber;
 		this.availability = true;
 	}
-	
+
+	public Book getBook() {
+		return book;
+	}
+
 	public void setBook(Book book) {
 		this.book =  book; 
 	}

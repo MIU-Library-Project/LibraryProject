@@ -14,6 +14,12 @@ public class Person {
 	private String lastName;
 	private String phoneNumber;
 	private Address address;
-	
-	
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 }

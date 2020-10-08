@@ -1,14 +1,13 @@
 package ui;
 
-import Entity.CheckOutRecord;
-import Entity.CheckOutRecordEntry;
+import Entity.*;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class TableModel extends AbstractTableModel {
     private List<CheckOutRecordEntry> checkOutRecordEntryList;
-    private String[] columnNames = {"Book title", "Checkout date", "Due date"};
+    private String[] columnNames = {"Book title", "Book Author", "Book id", "Checkout date", "Due date"};
 
     TableModel(List<CheckOutRecordEntry> checkOutRecordEntryList) {
         this.checkOutRecordEntryList = checkOutRecordEntryList;
@@ -33,12 +32,32 @@ public class TableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         CheckOutRecordEntry checkOutRecordEntry = checkOutRecordEntryList.get(rowIndex);
 
+        BookCopy bookCopy = checkOutRecordEntry.getBookCopy();
+        Book book = bookCopy.getBook();
+        String authors = getAllAuthors(book.getAuthors());
+
         if (columnIndex == 0) {
-            return checkOutRecordEntry.getBookCopy().getCopyNumber();
+            return book.getTitle();
         } else if (columnIndex == 1) {
+            return authors;
+        } else if (columnIndex == 2) {
+            return bookCopy.getCopyNumber();
+        } else if (columnIndex == 3) {
             return checkOutRecordEntry.getDateofCheckout();
         } else {
             return checkOutRecordEntry.getDueDate();
         }
+    }
+
+    private String getAllAuthors(List<Author> authors) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Author author : authors) {
+            stringBuilder.append(author.getFirstName())
+                    .append(" ")
+                    .append(author.getLastName())
+                    .append("\n");
+        }
+
+        return stringBuilder.toString();
     }
 }
